@@ -12,8 +12,8 @@ public class TodoRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public int createTodo(String name) {
-        return jdbcTemplate.update("INSERT INTO \"TODO\" (\"NAME\") VALUES(?)", name);
+    public int createTodo(String id,String name) {
+        return jdbcTemplate.update("INSERT INTO \"TODO\" (\"NAME\",\"ID\") VALUES(?,?)", name, id);
     }
 
     public int updateTodo(Todo todo) {

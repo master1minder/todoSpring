@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+    <meta charset="UTF-8" />
+</head>
+<body>
+{{#todo}}
+    <form  name="user" method="POST">
+        <table border="0">
+            {{#id}}
+                <tr>
+                    <td>ID</td>
+                    <td>:</td>
+                    <td>{{id}}</td>
+                </tr>
+            {{/id}}
+            <tr>
+                <td>Name</td>
+                <td>:</td>
+                <td><input type="text" name="name" value="{{#name}}{{name}}{{/name}}" /></td>
+            </tr>
+
+        </table>
+        <input type="submit" value="{{#add}}Create{{/add}}{{^add}}Update{{/add}}" />
+    </form>
+{{/todo}}
+<!-- Check if errorMessage is not null and not empty -->
+<div class="error">{{#errorMessage}}{{errorMessage}}{{/errorMessage}}</div>
+
+</body>
+</html>

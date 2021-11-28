@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Todo;
-import com.example.demo.repo.TodoRepository;
+import com.example.demo.repo.TodoService;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,87 +13,53 @@ import java.util.List;
 //@TODO
 //Отработать вывод в мусташ всех задач как в видео о сарафане
 @RestController
-@RequestMapping("/todo")
+@RequestMapping("/json")
 public class TodoController {
 
 
     @Autowired
-    private TodoRepository todo;
+    private TodoService todoService;
 
-//    @RequestMapping(value = "/create", method = RequestMethod.PUT, consumes = "text/plain")
-//    public int createPerson(@RequestBody String param) {
-//        String name = null;
-//        try {
-//            JSONObject json = new JSONObject(param);
-//            name = json.getString("name");
-//        } catch (JSONException e) {
-//            e.getLocalizedMessage();
-//            return 0;
-//        }
-//        return todo.createTodo(name);
-//    }
-
-
-//    @RequestMapping(value = "update", method = RequestMethod.POST, consumes = "text/plain")
-//    public int updatePerson(@RequestBody String param) {
-//        Todo t = new Todo();
-//        try {
-//            JSONObject json = new JSONObject(param);
-//            t.setId(json.getInt("id"));
-//            t.setName(json.getString("name"));
-//        } catch (JSONException e) {
-//            e.getLocalizedMessage();
-//            return 0;
-//        }
-//        return todo.updateTodo(t);
-//    }
-
-
-    //?name=параметр
-//    @RequestMapping(value = "/create", method = RequestMethod.PUT, consumes = "text/plain")
-//    public int createPerson(@RequestBody String param) {
-//        String name = null;
-//        try {
-//            JSONObject json = new JSONObject(param);
-//            name = json.getString("name");
-//        } catch (JSONException e) {
-//            e.getLocalizedMessage();
-//            return 0;
-//        }
-//        return todo.createTodo(name);
-//    }
-    //?name=имя
-    @RequestMapping(value = "/update", method = RequestMethod.POST, consumes = "text/plain")
-    public int updatePerson(@RequestBody String param) {
-        Todo t = new Todo();
-        try {
+    @RequestMapping(value = "/create", method=RequestMethod.PUT, consumes="text/plain")
+    public int createPerson(@RequestBody String param){
+        String name = null;
+        try{
             JSONObject json = new JSONObject(param);
-            t.setId(json.getInt("id"));
-            t.setName(json.getString("name"));
-        } catch (JSONException e) {
+            name = json.getString("name");
+        }catch(JSONException e){
             e.getLocalizedMessage();
             return 0;
         }
-        return todo.updateTodo(t);
+        return person.createPerson(name);
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    public int deletePerson(@PathVariable Integer id) {
-        return todo.deleteTodo(id);
+    @RequestMapping(value = "update", method=RequestMethod.POST,consumes="text/plain")
+    public int updatePerson(@RequestBody String param){
+        Persons p = new Persons();
+        try{
+            JSONObject json = new JSONObject(param);
+            p.setId(json.getInt("id"));
+            p.setName(json.getString("name"));
+        }catch(JSONException e){
+            e.getLocalizedMessage();
+            return 0;
+        }
+        return person.updatePerson(p);
     }
 
-    //http://localhost:8080/gettodo/?id=1
-    @RequestMapping(value = "/gettodo", method = RequestMethod.GET)
-    public Todo getPerson(@RequestParam("id") Integer id) {
-        return todo.getTodo(id);
+    @RequestMapping(value="{id}", method=RequestMethod.DELETE)
+    public int deletePerson(@PathVariable Integer id){
+        return person.deletePerson(id);
     }
 
-    //http://localhost:8080/gettodos
-    @RequestMapping(value = "/gettodos", method = RequestMethod.GET)
-    public String GetTODOS(Model model){
-        List<Todo> todos = todo.getTodo();
-        model.addAttribute("task",todos);
-        return "todos";
+    @RequestMapping(value = "/getperson", method=RequestMethod.GET)
+    public Persons getPerson(@RequestParam("id") Integer id){
+        return person.getPerson(id);
+    }
+
+    @RequestMapping(value = "/getpersons", method=RequestMethod.GET)
+    public List<Persons> getPersons(){
+        return person.getPersons();
     }
 
 }

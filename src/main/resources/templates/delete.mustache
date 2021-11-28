@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1> View Todo</h1>
+{{#todo}}
+<table>
+  <tr>
+    <td>ID</td>
+    <td>:</td>
+    <td>{{id}}</td>
+  </tr>
+
+    <tr>
+    <td>Name</td>
+    <td>:</td>
+    <td>{{name}}</td>
+  </tr>
+
+
+</table>
+{{#allowDelete}}
+
+<form  method="POST">
+  Delete this user? <input type="submit" value="Yes" />
+</form>
+{{/allowDelete}}
+{{^allowDelete}}
+{{/allowDelete}}
+
+{{/todo}}
+
+{{#errorMessage}}
+<div class="error">{{errorMessage}}</div>
+{{/errorMessage}}
+</body>
+</html>
